@@ -24,7 +24,6 @@ source "arm-image" "bpim4-pwnagotchi" {
   // qemu_binary     = "qemu-aarch64-static"
   qemu_args       = ["-r", "6.6.44"]
   target_image_size = 19969908736
-  image_mounts    = ["/boot/firmware","/"]
 }
 
 build {
