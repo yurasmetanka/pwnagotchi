@@ -30,6 +30,22 @@ build {
   name = "Banana Pi M4 Zero Pwnagotchi"
   sources = ["source.arm-image.bpim4-pwnagotchi"]
 
+  # Set DNS servers
+  provisioner "shell" {
+    inline = [
+      # Delete symlink
+      "sudo rm /etc/resolv.conf",
+      "echo 'nameserver 8.8.8.8' | sudo tee -a /etc/resolv.conf > /dev/null",
+      "echo 'nameserver 8.8.4.4' | sudo tee -a /etc/resolv.conf > /dev/null",
+    ]
+  }
+
+  provisioner "shell" {
+    inline = [
+      "sudo apt-get update || (sleep 30 && sudo apt-get update)"
+    ]
+  }
+
   provisioner "file" {
     destination = "/usr/bin/"
     sources     = [
@@ -40,6 +56,11 @@ build {
       "data/64bit/usr/bin/monstop",
       "data/64bit/usr/bin/pwnagotchi-launcher",
       "data/64bit/usr/bin/pwnlib",
+    ]
+  }
+  provisioner "shell" {
+    inline = [
+      "apt-get update -o Acquire::Retries=3 --allow-releaseinfo-change"
     ]
   }
   provisioner "shell" {
