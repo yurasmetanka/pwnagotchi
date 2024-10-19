@@ -11,15 +11,9 @@
       hostname: "{{ lookup('env', 'PWN_HOSTNAME') | default('pwnagotchi', true) }}"
       version: "{{ lookup('env', 'PWN_VERSION') | default('pwnagotchi', true) }}"
     system:
-      boot_options:
-        - "dtoverlay=dwc2"
-        - "dtoverlay=spi1-3cs"
-        - "dtparam=i2c1=on"
-        - "dtparam=i2c_arm=on"
-        - "dtparam=spi=on"
-        - "gpu_mem=16"
       modules:
-        - "i2c-dev"
+        # - "i2c-dev"
+        - "g_ether"
     services:
       enable:
         - bettercap.service
@@ -191,60 +185,37 @@
     #     dest: "/usr/local/lib/python3.9/dist-packages/RPi"
     #     state: link
 
-    # Now we set up /boot/firmware
+    # Now we set up /boot
     - name: Create pi user
       copy:
-        dest: /boot/firmware/userconf
+        dest: /boot/userconf
         content: |
           pi:$5$733Efsksay$SEFUKemv8FaNAu6X4GUfxdSzSDh6PbpOcdtNe5b7Nt0
 
-    - name: enable ssh on boot
-      file:
-        path: /boot/firmware/ssh
-        state: touch
+    # - name: configure /boot/bananapiEnv.txt
+    #   block:
+        # - name: create bananapiEnv file
+        #   file:
+        #     path: /boot/bananapiEnv.txt
+        #     state: touch
+    - name: configure /boot/armbianEnv.txt
+      lineinfile:
+        path: /boot/armbianEnv.txt
+        state: present
+        regexp: '^overlays='
+        line: 'overlays=ph-i2c1 pg-i2c4 pg-uart1 spi0-spidev spi1-cs1-spidev'
 
     - name: remove current rc.local
       file:
         path: /etc/rc.local
         state: absent
 
-    - name: change root partition
-      replace:
-        dest: /boot/firmware/cmdline.txt
-        backup: no
-        regexp: "root=PARTUUID=[a-zA-Z0-9\\-]+"
-        replace: "root=/dev/mmcblk0p2"
-
-    - name: setup /boot/firmware/config.txt
-      blockinfile:
-        path: /boot/firmware/config.txt
+    - name: adjust /etc/modules
+      lineinfile:
+        dest: /etc/modules
         insertafter: EOF
-        # block: |
-        #   dtparam=i2c1=on
-        #   dtparam=i2c_arm=on
-        #   dtparam=spi=on
-        #   gpu_mem=1
-        #   dtoverlay=dwc2
-        #   #dtoverlay=disable-wifi
-        #   enable_uart=1
-          
-        #   [pi02w]
-        #   dtoverlay=spi0-2cs
-        #   #dtoverlay=disable-wifi
-          
-        #   [pi3]
-        #   dtoverlay=spi0-2cs
-        #   #dtoverlay=disable-wifi
-          
-        #   [pi4]
-        #   dtoverlay=spi0-2cs
-        #   #dtoverlay=disable-wifi
-          
-        #   [pi5]
-        #   dtoverlay=spi0-2cs
-        #   #dtoverlay=disable-wifi
         line: '{{ item }}'
-      with_items: "{{system.boot_options}}"
+      with_items: "{{system.modules}}"
 
     - name: configure g_ether options for repeatable RNDIS device
       copy:
