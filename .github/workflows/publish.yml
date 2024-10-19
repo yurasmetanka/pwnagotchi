@@ -10,10 +10,12 @@ jobs:
     strategy:
       matrix:
         include:
-        - name: "Raspberry Pi 32-bit"
-          id: "32bit"  
-        - name: "Raspberry Pi 64-bit"
-          id: "64bit" 
+        # - name: "Raspberry Pi 32-bit"
+        #   id: "32bit"  
+        # - name: "Raspberry Pi 64-bit"
+        #   id: "64bit" 
+        - name: "Banana Pi M4 zero"
+          id: "bpim4" 
 
     steps:
       - uses: actions/checkout@v4
