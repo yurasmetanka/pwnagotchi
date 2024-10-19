@@ -45,17 +45,21 @@ packer:
 	unzip -o /tmp/packer.zip -d /tmp
 	sudo mv /tmp/packer /usr/bin/packer
 
-image: packer
-	export LC_ALL=en_GB.UTF-8
-	cd builder && sudo /usr/bin/packer init combined.json.pkr.hcl && sudo $(UNSHARE) /usr/bin/packer build -var "pwn_hostname=$(PWN_HOSTNAME)" -var "pwn_version=$(PWN_VERSION)" combined.json.pkr.hcl
+# image: packer
+# 	export LC_ALL=en_GB.UTF-8
+# 	cd builder && sudo /usr/bin/packer init combined.json.pkr.hcl && sudo $(UNSHARE) /usr/bin/packer build -var "pwn_hostname=$(PWN_HOSTNAME)" -var "pwn_version=$(PWN_VERSION)" combined.json.pkr.hcl
 
-32bit: packer
-	export LC_ALL=en_GB.UTF-8
-	cd builder && sudo /usr/bin/packer init raspberrypi32.json.pkr.hcl && sudo $(UNSHARE) /usr/bin/packer build -var "pwn_hostname=$(PWN_HOSTNAME)" -var "pwn_version=$(PWN_VERSION)" raspberrypi32.json.pkr.hcl
+# 32bit: packer
+# 	export LC_ALL=en_GB.UTF-8
+# 	cd builder && sudo /usr/bin/packer init raspberrypi32.json.pkr.hcl && sudo $(UNSHARE) /usr/bin/packer build -var "pwn_hostname=$(PWN_HOSTNAME)" -var "pwn_version=$(PWN_VERSION)" raspberrypi32.json.pkr.hcl
 
-64bit: packer
+# 64bit: packer
+# 	export LC_ALL=en_GB.UTF-8
+# 	cd builder && sudo /usr/bin/packer init raspberrypi64.json.pkr.hcl && sudo $(UNSHARE) /usr/bin/packer build -var "pwn_hostname=$(PWN_HOSTNAME)" -var "pwn_version=$(PWN_VERSION)" raspberrypi64.json.pkr.hcl
+
+bpim4: packer
 	export LC_ALL=en_GB.UTF-8
-	cd builder && sudo /usr/bin/packer init raspberrypi64.json.pkr.hcl && sudo $(UNSHARE) /usr/bin/packer build -var "pwn_hostname=$(PWN_HOSTNAME)" -var "pwn_version=$(PWN_VERSION)" raspberrypi64.json.pkr.hcl
+	cd builder && sudo /usr/bin/packer init bpim4.json.pkr.hcl && sudo $(UNSHARE) /usr/bin/packer build -var "pwn_hostname=$(PWN_HOSTNAME)" -var "pwn_version=$(PWN_VERSION)" bpim4.json.pkr.hcl
 
 clean:
 	- rm -rf /tmp/packer*
