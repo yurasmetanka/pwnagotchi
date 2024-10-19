@@ -20,10 +20,10 @@ variable "pwn_version" {
 }
 
 source "arm-image" "bpim4-pwnagotchi" {
-  image_type      = "armbian"
+  // image_type      = "armbian"
   image_arch      = "arm64"
   iso_url         = "https://mirrors.dotsrc.org/armbian-dl/bananapim4zero/archive/Armbian_24.8.1_Bananapim4zero_bookworm_current_6.6.44.img.xz"
-  // iso_checksum    = ""
+  iso_checksum    = "none"
   output_filename = "../../../pwnagotchi-bpim4.img"
   // qemu_binary     = "qemu-aarch64-static"
   qemu_args       = ["-r", "6.6.44"]
