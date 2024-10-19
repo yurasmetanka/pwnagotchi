@@ -1,9 +1,5 @@
 packer {
   required_plugins {
-    arm-image = {
-      source  = "github.com/solo-io/arm-image"
-      version = ">= 0.0.1"
-    }
     ansible = {
       source  = "github.com/hashicorp/ansible"
       version = ">= 1.1.1"
@@ -20,7 +16,7 @@ variable "pwn_version" {
 }
 
 source "arm-image" "bpim4-pwnagotchi" {
-  // image_type      = "armbian"
+  image_type      = "armbian"
   image_arch      = "arm64"
   iso_url         = "https://mirrors.dotsrc.org/armbian-dl/bananapim4zero/archive/Armbian_24.8.1_Bananapim4zero_bookworm_current_6.6.44.img.xz"
   iso_checksum    = "none"

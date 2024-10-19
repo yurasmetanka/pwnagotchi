@@ -1,4 +1,4 @@
-PACKER_VERSION := 1.11.0
+PACKER_VERSION := 1.10.3
 PWN_HOSTNAME := pwnagotchi
 PWN_VERSION := $(shell cut -d"'" -f2 < pwnagotchi/_version.py)
 
@@ -26,7 +26,7 @@ UNSHARE := $(UNSHARE) --uts
 endif
 
 # sudo apt-get install qemu-user-static qemu-utils
-all: packer image
+# all: packer image
 
 update_langs:
 	@for lang in pwnagotchi/locale/*/; do\
@@ -40,10 +40,13 @@ compile_langs:
 		./scripts/language.sh compile $$(basename $$lang); \
 	done
 
-packer:
+packer: clean
 	curl https://releases.hashicorp.com/packer/$(PACKER_VERSION)/packer_$(PACKER_VERSION)_linux_amd64.zip -o /tmp/packer.zip
 	unzip -o /tmp/packer.zip -d /tmp
 	sudo mv /tmp/packer /usr/bin/packer
+	git clone https://github.com/solo-io/packer-builder-arm-image /tmp/packer-builder-arm-image
+	cd /tmp/packer-builder-arm-image && go mod download && go build
+	sudo cp /tmp/packer-builder-arm-image/packer-plugin-arm-image /usr/bin
 
 # image: packer
 # 	export LC_ALL=en_GB.UTF-8
@@ -57,7 +60,7 @@ packer:
 # 	export LC_ALL=en_GB.UTF-8
 # 	cd builder && sudo /usr/bin/packer init raspberrypi64.json.pkr.hcl && sudo $(UNSHARE) /usr/bin/packer build -var "pwn_hostname=$(PWN_HOSTNAME)" -var "pwn_version=$(PWN_VERSION)" raspberrypi64.json.pkr.hcl
 
-bpim4: packer
+bpim4: clean packer
 	export LC_ALL=en_GB.UTF-8
 	cd builder && sudo /usr/bin/packer init bpim4.json.pkr.hcl && sudo $(UNSHARE) /usr/bin/packer build -var "pwn_hostname=$(PWN_HOSTNAME)" -var "pwn_version=$(PWN_VERSION)" bpim4.json.pkr.hcl
 
