@@ -125,8 +125,8 @@
           - ntp
           - pkg-config
           - python3-dev
-          - python3-pip
-          - python3-setuptools
+          - python3-pip=21
+          - python3-setuptools=65.5.0
           - python3-smbus
           - qpdf
           - rsync

@@ -21,7 +21,7 @@ stable_baselines3
 rpi-lgpio
 rpi_hardware_pwm
 pydrive2
-setuptools
+setuptools==65.5.0
 gymnasium
 numpy
 smbus
