@@ -17,11 +17,11 @@ dbus-python
 toml
 python-dateutil
 websockets
-stable_baselines3
+stable-baselines3>=2.0.0
 rpi-lgpio
 rpi_hardware_pwm
 pydrive2
-setuptools==65.5.0
+setuptools
 gymnasium
 numpy
 smbus
