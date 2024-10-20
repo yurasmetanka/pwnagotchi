@@ -40,13 +40,6 @@ build {
     ]
   }
 
-  provisioner "shell" {
-    inline = [
-      "ls -la /boot",
-      "cat /boot/armbianEnv.txt",
-    ]
-  }
-
   provisioner "file" {
     destination = "/usr/bin/"
     sources     = [
