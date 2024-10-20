@@ -6,7 +6,7 @@
   vars:
     kernel:
       min: "6.6"
-      full: "6.6.44"
+      full: "6.6.54"
     pwnagotchi:
       hostname: "{{ lookup('env', 'PWN_HOSTNAME') | default('pwnagotchi', true) }}"
       version: "{{ lookup('env', 'PWN_VERSION') | default('pwnagotchi', true) }}"

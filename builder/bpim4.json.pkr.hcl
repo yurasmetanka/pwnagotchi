@@ -18,11 +18,12 @@ variable "pwn_version" {
 source "arm-image" "bpim4-pwnagotchi" {
   image_type      = "armbian"
   image_arch      = "arm64"
-  iso_url         = "https://mirrors.dotsrc.org/armbian-dl/bananapim4zero/archive/Armbian_24.8.1_Bananapim4zero_bookworm_current_6.6.44.img.xz"
+  // iso_url         = "https://mirrors.dotsrc.org/armbian-dl/bananapim4zero/archive/Armbian_24.8.1_Bananapim4zero_bookworm_current_6.6.44.img.xz"
+  iso_url         = "https://dl.armbian.com/nightly/bananapim4zero/Bookworm_current_gnome-backported-mesa"
   iso_checksum    = "none"
   output_filename = "../../../pwnagotchi-bpim4.img"
   // qemu_binary     = "qemu-aarch64-static"
-  qemu_args       = ["-r", "6.6.44"]
+  qemu_args       = ["-r", "6.6.54"]
   target_image_size = 19969908736
   resolv-conf     = "delete"
 }
@@ -36,6 +37,13 @@ build {
     inline = [
       "echo 'nameserver 8.8.8.8' | sudo tee -a /etc/resolv.conf > /dev/null",
       "echo 'nameserver 8.8.4.4' | sudo tee -a /etc/resolv.conf > /dev/null",
+    ]
+  }
+
+  provisioner "shell" {
+    inline = [
+      "ls -la /boot",
+      "cat /boot/armbianEnv.txt",
     ]
   }
 
