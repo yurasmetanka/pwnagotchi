@@ -55,12 +55,20 @@ jobs:
           sudo mv pishrink.sh /usr/local/bin
           sudo pishrink.sh -aZ "pwnagotchi-${{ env.VERSION }}-${{ matrix.id }}.img"
 
-      - name: Release
-        uses: softprops/action-gh-release@v2
+      # - name: Release
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     prerelease: false
+      #     make_latest: true
+      #     tag_name: v${{ env.VERSION }}
+      #     name: Pwnagotchi v${{ env.VERSION }}
+      #     files: pwnagotchi-${{ env.VERSION }}-${{ matrix.id }}.img.xz
+      #     generate_release_notes: true
+
+      - name: Upload to gdrive
+        uses: agusprayogi02/auto-upload-gdrive@v1.0.1
         with:
-          prerelease: false
-          make_latest: true
-          tag_name: v${{ env.VERSION }}
-          name: Pwnagotchi v${{ env.VERSION }}
-          files: pwnagotchi-${{ env.VERSION }}-${{ matrix.id }}.img.xz
-          generate_release_notes: true
+          filename: pwnagotchi-${{ env.VERSION }}-${{ matrix.id }}.img.xz
+          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
+          credentials: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+          mimeType: application/x-xz
