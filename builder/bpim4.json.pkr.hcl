@@ -32,7 +32,6 @@ build {
   name = "Banana Pi M4 Zero Pwnagotchi"
   sources = ["source.arm-image.bpim4-pwnagotchi"]
 
-  # Set DNS
   provisioner "shell" {
     inline = [
       "echo 'nameserver 8.8.8.8' | sudo tee -a /etc/resolv.conf > /dev/null",
@@ -44,6 +43,8 @@ build {
     destination = "/usr/bin/"
     sources     = [
       "data/64bit/usr/bin/bettercap-launcher",
+      "data/64bit/usr/bin/decryption-webserver",
+      "data/64bit/usr/bin/fix_pwny_ethernet.sh",
       "data/64bit/usr/bin/hdmioff",
       "data/64bit/usr/bin/hdmion",
       "data/64bit/usr/bin/monstart",
@@ -61,6 +62,15 @@ build {
   provisioner "file" {
     destination = "/usr/local/src/pwnagotchi/"
     source = "../"
+  }
+  provisioner "file" {
+    destination = "/etc/"
+    sources     = [
+      "data/64bit/etc/rc.local",
+      "data/64bit/etc/dphys-swapfile",
+      "data/64bit/etc/bash_completion.d/",
+      "data/64bit/etc/network/",
+    ]
   }
   provisioner "file" {
     destination = "/etc/systemd/system/"

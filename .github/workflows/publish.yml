@@ -22,15 +22,6 @@ jobs:
         with:
           path: publish/build
 
-      # Add a cache for Packer cache directory
-      - name: Cache Packer .packer_cache
-        uses: actions/cache@v3
-        with:
-          path: publish/build/.packer_cache
-          key: ${{ runner.os }}-packer-${{ matrix.id }}-${{ hashFiles('publish/build/pwnagotchi/_version.py') }}
-          restore-keys: |
-            ${{ runner.os }}-packer-${{ matrix.id }}-
-
       - name: Extract version from file
         id: get_version
         run: |
