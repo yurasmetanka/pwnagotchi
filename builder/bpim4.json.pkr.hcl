@@ -15,11 +15,18 @@ variable "pwn_version" {
   type = string
 }
 
+variable "images_root" {
+  type = string
+  description = "Path to disk image directory"
+  default = "../../../images"
+}
+
 source "arm-image" "bpim4-pwnagotchi" {
   image_type      = "armbian"
   image_arch      = "arm64"
   // iso_url         = "https://mirrors.dotsrc.org/armbian-dl/bananapim4zero/archive/Armbian_24.8.1_Bananapim4zero_bookworm_current_6.6.44.img.xz"
-  iso_url         = "https://dl.armbian.com/nightly/bananapim4zero/Bookworm_current_gnome-backported-mesa"
+  // iso_url         = "https://dl.armbian.com/nightly/bananapim4zero/Bookworm_current_gnome-backported-mesa"
+  iso_url         = "file:${abspath(var.images_root)}/Armbian-unofficial_24.11.0-trunk.303_Bananapim4zero_bookworm_current_6.6.54.img.xz"
   iso_checksum    = "none"
   output_filename = "../../../pwnagotchi-bpim4.img"
   // qemu_binary     = "qemu-aarch64-static"

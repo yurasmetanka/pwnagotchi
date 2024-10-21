@@ -18,6 +18,13 @@ jobs:
           id: "bpim4" 
 
     steps:
+      - name: download armbian image
+        uses: robinraju/release-downloader@v1
+        with:
+          tag: 'armbian-bpim4z-"24.11.0-trunk.303"'
+          fileName: '*'
+          out-file-path: images
+
       - uses: actions/checkout@v4
         with:
           path: publish/build
