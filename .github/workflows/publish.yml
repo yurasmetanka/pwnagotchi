@@ -33,7 +33,7 @@ jobs:
 
       - name: Build ${{ matrix.name }} img file
         run: cd publish/build; ls -la .; pwd; make packer; make ${{ matrix.id }}
-      
+
       - name: Change name of .img.xz to add version
         run: |
           sudo chown runner:docker "pwnagotchi-${{ matrix.id }}.img"
