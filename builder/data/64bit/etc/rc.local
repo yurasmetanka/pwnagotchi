@@ -35,6 +35,6 @@ mv /etc/rc.local.ORIG /etc/rc.local || cat >/etc/rc.local <<EOF
 exit 0
 EOF
 
-exec /etc/rc.local
+# exec /etc/rc.local
 
 exit 0

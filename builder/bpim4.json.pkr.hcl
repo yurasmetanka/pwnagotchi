@@ -50,7 +50,7 @@ build {
     destination = "/usr/bin/"
     sources     = [
       "data/64bit/usr/bin/bettercap-launcher",
-      "data/64bit/usr/bin/decryption-webserver",
+      // "data/64bit/usr/bin/decryption-webserver",
       "data/64bit/usr/bin/fix_pwny_ethernet.sh",
       "data/64bit/usr/bin/hdmioff",
       "data/64bit/usr/bin/hdmion",
@@ -74,8 +74,8 @@ build {
     destination = "/etc/"
     sources     = [
       "data/64bit/etc/rc.local",
-      "data/64bit/etc/dphys-swapfile",
-      "data/64bit/etc/bash_completion.d/",
+      // "data/64bit/etc/dphys-swapfile",
+      // "data/64bit/etc/bash_completion.d/",
       "data/64bit/etc/network/",
     ]
   }
